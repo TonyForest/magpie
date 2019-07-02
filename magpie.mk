@@ -16,5 +16,12 @@ ifneq ($(wildcard $(MYTRIM_DIR)/trim.h),)
   include $(MAGPIE_DIR)/contrib/mytrim.mk
 endif
 
+GEANT_BCA_DIR    ?=$(MAGPIE_DIR)/contrib/GEANT_BCA
+ifneq ($(wildcard $(GEANT_BCA_DIR)/GEANT_BCA))
+  ADDITIONAL_CPPFLAGS += -DGEANT4_ENABLED
+  app_INCLUDES   += -I $(GEANT_BCA_DIR)/..
+  include $(MAGPIE_DIR)/contrib/geant4.mk
+endif
+
 include $(MAGPIE_DIR)/contrib/gsl.mk
 include $(MAGPIE_DIR)/contrib/fftw3.mk
