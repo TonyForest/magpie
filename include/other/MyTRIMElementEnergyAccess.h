@@ -65,4 +65,3 @@ MyTRIMElementEnergyAccess<T>::getEnergyDensity()
 
   return _value_cache;
 }
-

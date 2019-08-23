@@ -1,0 +1,12 @@
+{
+ "GEANT"
+ {
+    /// options
+    "options" : { "seed" :100, "mfp" :false, "GenerateRecoils" :1, "RecoilCutoff" :1, "PhysicsCutoff" :1},
+    /// Incident Ions 
+    "ion" : {"Z": 60, "A(amu)": 120, "energy(eV)": 1000, "number": 1 },
+    "ionInitPos" : {"x": -40000, "y": 0, "z": 0},   "ionInitMomVec" : {"px": 1, "py": 0, "pz": 0},
+    ///Target material
+    "sample":
+    [
+       ///Node positions

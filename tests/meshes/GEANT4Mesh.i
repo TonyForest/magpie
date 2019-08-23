@@ -1,13 +1,17 @@
 [Mesh]
- type = MyTRIMMesh
-  dim = 2
-  nx = 60
-  ny = 60
+ type = GEANT4Mesh
+  dim = 3
+  nx = 2
+  ny = 1
+  nz = 1
   xmin = 0
-  xmax = 200
-  ymin = -60
-  ymax = 140
-  elem_type = QUAD4
+  xmax = 2
+  ymin = 0
+  ymax = 1
+  zmin = 0
+  zmax = 1
+  elem_type = HEX8
+  construct_node_list_from_side_list = true
 []
 [Variables]
   [./c]
@@ -26,11 +30,6 @@
   type = Transient
   num_steps = 1
 []
-[./num_elems_total]
-   type = NumElems
-   elem_filter = 'TOTAL'
-   execute_on = 'initial timestep_end'
- [../]
 [Outputs]
   exodus = true
 []
