@@ -7,6 +7,7 @@
 /**********************************************************************/
 
 #include "GEANT4Conditions.h"
+#include "GEANT4MeshInterface.h"
 
 registerMooseObject("MagpieApp", GEANT4Conditions);
 
@@ -15,7 +16,7 @@ InputParameters
 validParams<GEANT4Conditions>()
 {
   InputParameters params = validParams<GeneralUserObject>();
-  params += validParams<GEANT4Mesh>();
+  // params += validParams<GEANT4Mesh>();
 
   params.addClassDescription("PKA inital conditions with constant mass, charge, energy, and rate");
   params.addParam<Real>(
@@ -49,7 +50,6 @@ validParams<GEANT4Conditions>()
 
 GEANT4Conditions::GEANT4Conditions(const InputParameters & parameters)
   : GeneralUserObject(parameters),
-    GEANT4Mesh(parameters),
     _pka_rate(getParam<Real>("pka_rate")),
     _Z(getParam<Real>("Z")),
     _m(getParam<Real>("m")),
@@ -66,14 +66,16 @@ GEANT4Conditions::GEANT4Conditions(const InputParameters & parameters)
     _dispE(getParam<std::vector<Real>>("DispE")),
     _latticeE(getParam<std::vector<Real>>("LatticeE")),
     _surfaceE(getParam<std::vector<Real>>("SurfaceE")),
-    _fraction(getParam<std::vector<Real>>("Fraction"))
+    _fraction(getParam<std::vector<Real>>("Fraction")),
+    g4Mesh(nullptr)
 
 
 {
-  std::cout << "initialize GEANT4Conditions" << std::endl;
-  //const Real temp = _g4_mesh.getXmin();
-  std::cout << "The minimum corner " << temp << std::endl;
-  /// Create the json input file that GEANT4 will run on
+  // std::cout << "initialize GEANT4Conditions" << std::endl;
+  // Real temp = GEANT4MeshInterface::_xMinBox;
+  //
+  // std::cout << "The minimum corner " << temp << std::endl;
+  // /// Create the json input file that GEANT4 will run on
   std::ofstream GEANT4jsonFile("GEANT4input.json");
   GEANT4jsonFile << "{\n";
   GEANT4jsonFile << " \"GEANT\"\n";
@@ -119,7 +121,11 @@ GEANT4Conditions::GEANT4Conditions(const InputParameters & parameters)
   GEANT4jsonFile << "    [\n";
   GEANT4jsonFile << "       ///Node positions\n";
 
+  // get underlying libMesh mesh
+  auto & mesh = _mesh.getMesh();
 
+  // get a fresh point locator
+  _point_locator = _mesh.getPointLocator();
 
   for (unsigned int j=0; j< _AtomicNumbers.size(); j++)
   {
@@ -130,5 +136,7 @@ GEANT4Conditions::GEANT4Conditions(const InputParameters & parameters)
 
 void GEANT4Conditions::execute()
 {
+  Real temp = g4Mesh->getXmin();
 
+  std::cout << "The minimum corner " << temp << std::endl;
 }

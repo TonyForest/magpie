@@ -10,6 +10,7 @@
 
 #include "GeneratedMesh.h"
 #include "PointLocatorRegularOrthogonal.h"
+#include "GEANT4MeshInterface.h"
 
 class GEANT4Mesh;
 
@@ -24,7 +25,7 @@ InputParameters validParams<GEANT4Mesh>();
  * Monte Carlo stage). This mesh is also recommended for use with the FourierTransform
  * user object.
  */
-class GEANT4Mesh : public GeneratedMesh
+class GEANT4Mesh : public GeneratedMesh, public GEANT4MeshInterface
 {
 public:
   GEANT4Mesh(const InputParameters & parameters);
@@ -40,14 +41,8 @@ public:
   /// since this is a regular mesh we can report the grid size in each dimension
   unsigned int getCellCountInDimension(unsigned int component);
 
-  inline void setXminBox(Real val) { _xMinBox = val; }
-  inline void setYminBox(Real val) { _yMinBox = val; }
-  inline void setZminBox(Real val) { _zMinBox = val; }
-  inline void setXmaxBox(Real val) { _xMaxBox = val; }
-  inline void setYmaxBox(Real val) { _yMaxBox = val; }
-  inline void setZmaxBox(Real val) { _zMaxBox = val; }
 
-  virtual Real getXmin() const { return _xMinBox; };
+
 
 protected:
 
@@ -60,12 +55,6 @@ protected:
   mutable std::unique_ptr<PointLocatorRegularOrthogonal> _point_locator;
 
 
-  /// Mesh Info
-  Real _xMinBox = 0;
-  Real _xMaxBox = 0;
-  Real _yMinBox = 0;
-  Real _yMaxBox = 0;
-  Real _zMinBox = 0;
-  Real _zMaxBox = 0;
+
 
 };

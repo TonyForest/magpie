@@ -10,9 +10,10 @@
 
 #include "GeneralUserObject.h"
 #include "GEANT4Mesh.h"
+#include "GEANT4MeshInterface.h"
 
 class GEANT4Conditions;
-//class GEANT4Mesh;
+class GEANT4MeshInterface;
 
 template <>
 InputParameters validParams<GEANT4Conditions>();
@@ -20,7 +21,7 @@ InputParameters validParams<GEANT4Conditions>();
 /**
  * PKAs with constant mass, charge, energy, and rate
  */
-class GEANT4Conditions : public GeneralUserObject, public GEANT4Mesh
+class GEANT4Conditions : public GeneralUserObject
 {
 public:
   GEANT4Conditions(const InputParameters & parameters);
@@ -69,8 +70,6 @@ protected:
   std::vector<Real> _surfaceE;
   std::vector<Real> _fraction;
 
-
-
-  //const GEANT4Mesh & _g4_mesh;
+  GEANT4MeshInterface * g4Mesh;
 
 };

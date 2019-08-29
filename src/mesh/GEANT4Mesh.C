@@ -33,7 +33,8 @@ GEANT4Mesh::GEANT4Mesh(const InputParameters & parameters)
 {
   std::cout << "initialize GEANT4Mesh" << std::endl;
   std::cout << "_xmin=" << _xmin << std::endl;
-  setXminBox(_xmin);
+  GEANT4MeshInterface::setXminBox(_xmin);
+  GEANT4MeshInterface::PrintTest();
   _cell_count.resize(_dim);
 
   if (isParamValid("elem_type"))
